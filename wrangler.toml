@@ -1,0 +1,9 @@
+name = "icespot-pulincunnoo"
+compatibility_date = "2026-10-22"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "icespot-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+migrations_dir = "migrations"

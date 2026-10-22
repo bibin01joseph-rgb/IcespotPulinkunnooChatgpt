@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Icespot Pulincunnoo • Ice Cream & Gelato</title>
+  
+  <!-- Google Fonts & Tailwind CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            cream: '#FFF9F2',
+            cone: '#E79B57',
+            strawberry: '#FF6B8B',
+            strawberryLight: '#FFF0F3',
+            mint: '#3EB489',
+            mintLight: '#E8F8F2',
+            choco: '#3B2419',
+            vanilla: '#FFFAED',
+            blueberry: '#6366F1'
+          },
+          boxShadow: {
+            'soft': '0 8px 30px rgba(0,0,0,0.06)',
+            'float': '0 12px 36px -4px rgba(255,107,139,0.28)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar & mobile optimizations */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FBCFE8;
+      border-radius: 999px;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.94); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FAF7F2] text-stone-800 antialiased min-h-screen flex flex-col font-sans selection:bg-strawberry/20">
+
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-rose-100/80 transition-all">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchView('menu')">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-400 flex items-center justify-center text-white shadow-md shadow-pink-200 text-xl font-bold">
+          🍦
+        </div>
+        <div>
+          <span class="font-display font-bold text-xl tracking-tight text-stone-900 flex items-center gap-1.5">
+            Icespot Pulincunnoo
+          </span>
+          <p class="text-xs text-stone-400 font-medium">Fresh handcrafted scoops & treats</p>
+        </div>
+      </div>
+
+      <!-- Navigation & Mode Pill -->
+      <div class="flex items-center gap-2">
+        <button id="viewToggleBtn" onclick="openAdminLoginModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-stone-100 hover:bg-stone-200 text-stone-700 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <span id="viewModeText">Admin Login</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="customerView" class="flex-1 max-w-4xl w-full mx-auto px-4 pb-28 pt-4 transition-all">
+    
+    <!-- Hero Banner with Info -->
+    <section class="mb-5 rounded-3xl p-5 bg-gradient-to-r from-pink-50 via-rose-50/60 to-amber-50 border border-pink-100/60 relative overflow-hidden shadow-sm">
+      <div class="relative z-10 max-w-lg">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 text-xs font-semibold text-strawberry shadow-xs mb-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Open for Takeaway & Orders
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-display font-bold text-stone-900 tracking-tight leading-tight">
+          Happiness begins with a cold scoop.
+        </h1>
+        <p class="text-xs sm:text-sm text-stone-600 mt-1.5 leading-relaxed">
+          Pick your treats, send order straight to our WhatsApp, and pay quickly via GPay / PhonePe / Paytm!
+        </p>
+      </div>
+      <div class="absolute -right-4 -bottom-6 text-7xl opacity-20 pointer-events-none select-none">
+        🍨
+      </div>
+    </section>
+
+    <!-- Quick Ordering Guide Bar -->
+    <div class="bg-white rounded-2xl p-3 border border-stone-200/60 shadow-xs mb-5 flex items-center justify-between gap-2 overflow-x-auto text-[11px] font-medium text-stone-600">
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span class="w-5 h-5 rounded-full bg-rose-100 text-strawberry font-bold flex items-center justify-center text-[10px]">1</span>
+        <span>Select Flavors</span>
+      </div>
+      <span class="text-stone-300">→</span>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px]">2</span>
+        <span>Send on WhatsApp</span>
+      </div>
+      <span class="text-stone-300">→</span>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-[10px]">3</span>
+        <span>UPI Pay & Pick Up</span>
+      </div>
+    </div>
+
+    <!-- Main customer navigation -->
+    <nav class="grid grid-cols-3 gap-2 mb-4" aria-label="Store sections">
+      <button id="customerTabMenu" onclick="switchCustomerTab('menu')" class="customer-nav-tab px-3 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-stone-900 text-white shadow-soft">🍦 Menu</button>
+      <button id="customerTabCakes" onclick="switchCustomerTab('cakes')" class="customer-nav-tab px-3 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-white text-stone-600 border border-stone-200">🎂 Cakes & Bento</button>
+      <button id="customerTabHistory" onclick="switchCustomerTab('history')" class="customer-nav-tab px-3 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-white text-stone-600 border border-stone-200">🧾 Order History</button>
+    </nav>
+
+    <section id="menuSection">
+    <!-- Category Tabs -->
+    <section class="mb-5 sticky top-[61px] z-30 bg-[#FAF7F2]/95 backdrop-blur-sm py-2">
+      <div id="categoryTabs" class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+        <!-- Dynamically injected category buttons -->
+      </div>
+    </section>
+
+    <!-- Menu Items Grid -->
+    <section>
+      <div class="flex items-center justify-between mb-3 px-1">
+        <h2 id="activeCategoryHeading" class="text-lg font-bold text-stone-900 font-display">All Ice Creams</h2>
+        <span id="itemCountBadge" class="text-xs font-semibold text-stone-400 bg-stone-200/60 px-2 py-0.5 rounded-full">0 items</span>
+      </div>
+      
+      <div id="menuContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <!-- Dynamically rendered ice cream cards -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyMenuState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-stone-200">
+        <div class="text-4xl mb-2">🍨</div>
+        <p class="text-stone-500 font-medium text-sm">No delicious items found in this section!</p>
+        <button onclick="filterCategory(activeCustomerTab === 'cakes' ? 'All Cakes & Bento' : 'All')" class="mt-3 text-xs text-strawberry font-bold underline">View All Items</button>
+      </div>
+    </section>
+    </section>
+
+    <!-- Customer-local order history -->
+    <section id="orderHistorySection" class="hidden space-y-3">
+      <div class="rounded-3xl bg-white border border-stone-200/70 p-5 shadow-soft">
+        <h2 class="font-display text-xl font-bold text-stone-900">Your Order History</h2>
+        <p class="text-sm text-stone-500 mt-1">Your saved order requests and their latest shop status appear here.</p>
+      </div>
+      <div id="orderHistoryList" class="space-y-3"></div>
+      <div id="emptyOrderHistory" class="text-center py-12 bg-white rounded-3xl border border-dashed border-stone-200">
+        <div class="text-4xl mb-2">🧾</div><p class="text-sm font-semibold text-stone-600">No orders saved yet</p>
+        <p class="text-xs text-stone-400 mt-1">Your order history will appear here after your request is saved.</p>
+        <button onclick="switchCustomerTab('menu')" class="mt-4 px-4 py-2 rounded-xl bg-stone-900 text-white text-xs font-bold">Browse menu</button>
+      </div>
+      <p class="text-[11px] text-stone-400 px-1">Order details are saved securely in the shop database. This browser stores your order references, so history will not automatically appear on another device. Requests remain pending until the shop confirms them.</p>
+    </section>
+
+  </main>
+
+  <div id="stickyCartBar" class="fixed bottom-0 left-0 right-0 z-30 p-3 bg-gradient-to-t from-white via-white/95 to-transparent backdrop-blur-xs transition-transform duration-300 transform translate-y-full">
+    <div class="max-w-md mx-auto bg-stone-900 text-white rounded-2xl p-3 shadow-float flex items-center justify-between">
+      <div class="flex items-center gap-3 pl-1">
+        <div class="w-10 h-10 rounded-xl bg-strawberry flex items-center justify-center text-white font-bold text-base shadow-sm">
+          <span id="cartCount">0</span>
+        </div>
+        <div>
+          <div class="text-xs text-stone-300">Total Bill</div>
+          <div class="text-lg font-bold tracking-tight text-white flex items-baseline">
+            ₹<span id="cartTotal">0</span>
+          </div>
+        </div>
+      </div>
+      <button onclick="openCheckoutModal()" class="bg-gradient-to-r from-pink-500 to-strawberry hover:from-pink-600 hover:to-rose-600 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+        <span>Review Order</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center hidden p-0 sm:p-4">
+    <div class="bg-white w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl max-h-[90vh] flex flex-col shadow-2xl animate-pop overflow-hidden">
+      <!-- Modal Header -->
+      <div class="p-4 border-b border-stone-100 flex items-center justify-between bg-stone-50/80">
+        <div>
+          <h3 class="font-display font-bold text-lg text-stone-900">Your Sweet Order</h3>
+          <p class="text-xs text-stone-500">Review items before WhatsApp checkout</p>
+        </div>
+        <button onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-stone-200/80 hover:bg-stone-300 flex items-center justify-center text-stone-600 font-bold">✕</button>
+      </div>
+
+      <!-- Modal Body (Scrollable items + customer inputs) -->
+      <div class="p-4 overflow-y-auto flex-1 space-y-4">
+        <!-- Cart Items List -->
+        <div id="checkoutCartItemsList" class="space-y-2.5">
+          <!-- Dynamically injected cart items -->
+        </div>
+
+        <!-- Bill Breakdown -->
+        <div class="bg-rose-50/50 p-3.5 rounded-2xl border border-rose-100 space-y-1.5 text-xs text-stone-700">
+          <div class="flex justify-between font-semibold text-stone-800 text-sm pt-1 border-t border-rose-200/50">
+            <span>To Pay</span>
+            <span class="text-strawberry font-extrabold text-base">₹<span id="checkoutFinalTotal">0</span></span>
+          </div>
+        </div>
+
+        <!-- Customer Inputs -->
+        <div class="space-y-3 pt-2">
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Your Name *</label>
+            <input type="text" id="custNameInput" placeholder="e.g. Rahul / Ananya" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all font-medium" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Order Type</label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="flex items-center gap-2 p-2.5 bg-stone-50 rounded-xl border border-stone-200 text-xs font-semibold cursor-pointer">
+                <input type="radio" name="orderType" value="Takeaway" checked class="text-strawberry focus:ring-strawberry" />
+                <span>🏃‍♂️ Takeaway Pickup</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 bg-stone-50 rounded-xl border border-stone-200 text-xs font-semibold cursor-pointer">
+                <input type="radio" name="orderType" value="Dine-in" class="text-strawberry focus:ring-strawberry" />
+                <span>🪑 Dine-in / Table</span>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">Preorder / pickup date</label>
+              <input type="date" id="custPickupDate" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-pink-300" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 mb-1">Preferred pickup time</label>
+              <input type="time" id="custPickupTime" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-pink-300" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Cake writing / inscription (Optional)</label>
+            <input type="text" id="cakeInscriptionInput" maxlength="80" placeholder="e.g. Happy Birthday Anu!" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all font-medium" />
+            <p class="text-[11px] text-stone-400 mt-1">Enter the exact message you would like written on your cake or Bento cake.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Other special notes (Optional)</label>
+            <textarea id="custNotesInput" rows="2" placeholder="Flavour preferences, colours, allergies, packaging requests, etc." class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all font-medium"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-white border-t border-stone-100">
+        <button onclick="sendOrderViaWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba5a] active:scale-[0.98] transition-all text-white font-bold p-3.5 rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 text-sm">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
+          <span>Send Order via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center hidden p-4">
+    <div class="bg-white w-full max-w-xs rounded-3xl p-6 shadow-2xl animate-pop text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-100 text-strawberry flex items-center justify-center mx-auto mb-3 text-2xl font-bold">
+        🔒
+      </div>
+      <h3 class="font-display font-bold text-lg text-stone-900">Admin Login</h3>
+      <p class="text-xs text-stone-500 mt-1 mb-4">Enter credentials to manage items</p>
+      
+      <div class="space-y-3 mb-4">
+        <input type="text" id="adminUserIdInput" placeholder="User ID" class="w-full text-center text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry font-medium" />
+        <input type="password" id="adminPassInput" placeholder="Password" class="w-full text-center text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry font-medium" />
+      </div>
+      
+      <p id="loginErrorMsg" class="text-xs text-rose-500 font-semibold hidden mb-3">Incorrect ID or Password.</p>
+
+      <div class="flex gap-2">
+        <button onclick="closeAdminLoginModal()" class="w-1/2 py-2.5 rounded-xl border border-stone-200 text-xs font-bold text-stone-600 hover:bg-stone-50">Cancel</button>
+        <button onclick="verifyAdminLogin()" class="w-1/2 py-2.5 rounded-xl bg-strawberry text-white text-xs font-bold hover:bg-rose-600 shadow-md">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="adminView" class="flex-1 max-w-4xl w-full mx-auto px-4 pb-20 pt-4 hidden">
+    <!-- Admin Top Nav Bar -->
+    <div class="flex items-center justify-between bg-white p-4 rounded-3xl border border-stone-200/80 shadow-xs mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center text-lg font-bold">⚙️</div>
+        <div>
+          <h2 class="font-display font-bold text-lg text-stone-900">Ice Cream Inventory</h2>
+          <p class="text-xs text-stone-500">Live Item & Price Manager</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="switchView('menu')" class="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-xs font-bold text-stone-700">Back to Store</button>
+        <button onclick="openItemEditorModal()" class="px-3.5 py-2 rounded-xl bg-strawberry text-white text-xs font-bold hover:bg-rose-600 flex items-center gap-1 shadow-sm">
+          <span>+</span> Add Flavor
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin Configuration Settings Card -->
+    <div class="bg-white rounded-3xl p-5 border border-stone-200/80 shadow-xs mb-5">
+      <h3 class="font-display font-bold text-stone-900 text-sm mb-3">Shop Configuration</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-stone-600 mb-1">Shop WhatsApp Number (with country code)</label>
+          <input type="text" id="shopPhoneInput" value="919876543210" onchange="updateShopSettings()" class="w-full text-xs p-2.5 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-1 focus:ring-strawberry font-mono" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-stone-600 mb-1">Shop UPI ID (for QR payment info)</label>
+          <input type="text" id="shopUpiInput" value="scoopcraft@okaxis" onchange="updateShopSettings()" class="w-full text-xs p-2.5 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-1 focus:ring-strawberry font-mono" />
+        </div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-stone-100 text-xs leading-relaxed text-stone-500">Admin login credentials are securely configured in Cloudflare Pages environment variables. They are not stored or displayed in this public page.</div>
+    </div>
+
+    <!-- Persistent Orders Management -->
+    <section class="bg-white rounded-3xl p-5 border border-stone-200/80 shadow-xs mb-5">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <div><h3 class="font-display font-bold text-stone-900 text-base">Customer Orders</h3><p class="text-xs text-stone-500 mt-1">Orders saved centrally in the database</p></div>
+        <button onclick="loadAdminOrders()" class="px-3 py-2 rounded-xl bg-stone-100 text-xs font-bold">Refresh</button>
+      </div>
+      <div id="adminOrdersList" class="space-y-3"><p class="text-sm text-stone-400">Log in to load orders.</p></div>
+    </section>
+
+    <!-- Admin Items Table / Cards -->
+    <div class="bg-white rounded-3xl p-5 border border-stone-200/80 shadow-xs">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display font-bold text-stone-900 text-base">Menu Flavors (<span id="adminItemCount">0</span>)</h3>
+        <button onclick="resetDefaultMenuData()" class="text-xs text-stone-400 hover:text-strawberry underline">Reset Default Menu</button>
+      </div>
+
+      <div id="adminItemsList" class="divide-y divide-stone-100">
+        <!-- Dynamically populated admin item list rows -->
+      </div>
+    </div>
+  </main>
+
+  <div id="itemEditorModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center hidden p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-pop max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4 border-b border-stone-100 pb-3">
+        <h3 id="editorModalTitle" class="font-display font-bold text-lg text-stone-900">Add New Flavor</h3>
+        <button onclick="closeItemEditorModal()" class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-bold hover:bg-stone-200">✕</button>
+      </div>
+
+      <form id="itemEditorForm" onsubmit="handleSaveItem(event)" class="space-y-3.5">
+        <input type="hidden" id="editItemId" value="" />
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Item Name *</label>
+          <input type="text" id="editItemName" required placeholder="e.g. Alphonso Mango Gelato" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Category *</label>
+            <select id="editItemCategory" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry">
+              <option value="Classic Scoops">Classic Scoops</option>
+              <option value="Artisan Gelato">Artisan Gelato</option>
+              <option value="Waffle Cones">Waffle Cones</option>
+              <option value="Sundaes & Bowls">Sundaes & Bowls</option>
+              <option value="Beverages & Shakes">Beverages & Shakes</option>
+              <option value="Cakes & Desserts">Cakes & Desserts</option>
+              <option value="Cakes & Bento">Cakes & Bento</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Price (₹) *</label>
+            <input type="number" id="editItemPrice" required min="1" step="1" placeholder="80" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry font-mono" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Description / Ingredients</label>
+          <input type="text" id="editItemDesc" placeholder="e.g. Made with pure Ratnagiri pulp and sweet cream" class="w-full text-sm p-3 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-strawberry" />
+        </div>
+
+        <!-- Image Upload & Preview Section -->
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Flavor Image (Upload or URL)</label>
+          <div class="flex items-center gap-3">
+            <div class="w-16 h-16 rounded-2xl bg-stone-100 border border-stone-200 overflow-hidden flex items-center justify-center shrink-0">
+              <img id="imagePreviewThumb" src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&auto=format&fit=crop&q=80" alt="Preview" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/FFF0F3/FF6B8B?text=IceCream'" />
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <input type="file" id="editItemFileInput" accept="image/*" onchange="handleImageFileSelect(event)" class="text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-strawberry hover:file:bg-rose-100" />
+              <input type="url" id="editItemImageUrl" placeholder="Or paste image URL" oninput="updatePreviewFromUrl(this.value)" class="w-full text-xs p-2 bg-stone-50 rounded-lg border border-stone-200 focus:outline-none font-mono" />
+            </div>
+          </div>
+          <p class="text-[10px] text-stone-400 mt-1">Accepts PNG, JPG, or WebP. Files upload directly or store optimized data URLs instantly.</p>
+        </div>
+
+        <!-- Badges & In Stock Toggle -->
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="block text-xs font-bold text-stone-700 mb-1">Badge</label>
+            <input type="text" id="editItemBadge" placeholder="e.g. Bestseller, New" class="w-full text-xs p-2.5 bg-stone-50 rounded-xl border border-stone-200 focus:outline-none" />
+          </div>
+          <div class="flex flex-col justify-end">
+            <label class="flex items-center gap-2 p-2 bg-stone-50 rounded-xl border border-stone-200 cursor-pointer">
+              <input type="checkbox" id="editItemAvailable" checked class="w-4 h-4 text-strawberry rounded focus:ring-strawberry" />
+              <span class="text-xs font-bold text-stone-700">In Stock Now</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-3 border-t border-stone-100">
+          <button type="button" onclick="closeItemEditorModal()" class="w-1/3 py-3 rounded-xl border border-stone-200 text-xs font-bold text-stone-600 hover:bg-stone-50">Cancel</button>
+          <button type="submit" id="saveItemBtn" class="w-2/3 py-3 rounded-xl bg-strawberry text-white text-xs font-bold hover:bg-rose-600 shadow-md transition-all active:scale-95">Save Flavor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom Alert Modal -->
+  <div id="customAlertModal" class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-xs flex items-center justify-center hidden p-4">
+    <div class="bg-white w-full max-w-xs rounded-3xl p-6 shadow-2xl animate-pop text-center">
+      <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-500 flex items-center justify-center mx-auto mb-3 text-2xl font-bold">⚠️</div>
+      <h3 class="font-display font-bold text-lg text-stone-900 mb-2">Notice</h3>
+      <p id="alertModalMessage" class="text-sm text-stone-600 mb-5"></p>
+      <button onclick="closeAlertModal()" class="w-full py-3 rounded-xl bg-strawberry text-white text-sm font-bold shadow-md">Okay</button>
+    </div>
+  </div>
+
+  <!-- Custom Confirm Modal -->
+  <div id="customConfirmModal" class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-xs flex items-center justify-center hidden p-4">
+    <div class="bg-white w-full max-w-xs rounded-3xl p-6 shadow-2xl animate-pop text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-100 text-strawberry flex items-center justify-center mx-auto mb-3 text-2xl font-bold">❓</div>
+      <h3 class="font-display font-bold text-lg text-stone-900 mb-2">Confirm Action</h3>
+      <p id="confirmModalMessage" class="text-sm text-stone-600 mb-5"></p>
+      <div class="flex gap-2">
+        <button onclick="closeConfirmModal()" class="w-1/2 py-2.5 rounded-xl border border-stone-200 text-sm font-bold text-stone-600">Cancel</button>
+        <button id="confirmModalActionBtn" class="w-1/2 py-2.5 rounded-xl bg-strawberry text-white text-sm font-bold shadow-md">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // -------------------------------------------------------------
+    // Cloudflare Pages API helpers
+    // -------------------------------------------------------------
+    let adminCreds = null; // short-lived server-issued session token, held in memory only
+
+    async function api(path, options = {}) {
+      const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+      if (adminCreds?.token) headers["x-admin-token"] = adminCreds.token;
+      const res = await fetch(path, { ...options, headers });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+      return data;
+    }
+
+    // -------------------------------------------------------------
+    // Initial Seed Database for Artisan Ice Cream
+    // -------------------------------------------------------------
+    const DEFAULT_SHOP_SETTINGS = {
+      phone: "919876543210",
+      upi: "scoopcraft@okaxis"
+    };
+
+
+    let menuItems = [];
+    let cart = {}; // { itemId: quantity }
+    let activeCategory = "All";
+    let activeCustomerTab = "menu"; // menu, cakes, history
+    let currentView = "menu"; // 'menu' or 'admin'
+    let shopSettings = { ...DEFAULT_SHOP_SETTINGS };
+    let tempUploadedImageUrl = "";
+
+    // -------------------------------------------------------------
+    // Custom Modal Replacements for Alert & Confirm
+    // -------------------------------------------------------------
+    function showAlert(msg) {
+      document.getElementById("alertModalMessage").textContent = msg;
+      document.getElementById("customAlertModal").classList.remove("hidden");
+    }
+    window.closeAlertModal = function() {
+      document.getElementById("customAlertModal").classList.add("hidden");
+    }
+
+    function showConfirm(msg, onConfirmCallback) {
+      document.getElementById("confirmModalMessage").textContent = msg;
+      const modal = document.getElementById("customConfirmModal");
+      const confirmBtn = document.getElementById("confirmModalActionBtn");
+      
+      confirmBtn.onclick = () => {
+        modal.classList.add("hidden");
+        if(onConfirmCallback) onConfirmCallback();
+      };
+      
+      modal.classList.remove("hidden");
+    }
+    window.closeConfirmModal = function() {
+      document.getElementById("customConfirmModal").classList.add("hidden");
+    }
+
+    // -------------------------------------------------------------
+    // Data Loading
+    // -------------------------------------------------------------
+    function rerenderAll() {
+      renderCategoryTabs();
+      renderMenu();
+      renderAdminItems();
+      renderCartBar();
+    }
+
+    async function loadMenu() {
+      try {
+        menuItems = await api("/api/menu");
+        menuItems.sort((a, b) => a.id.localeCompare(b.id));
+        rerenderAll();
+      } catch (err) {
+        console.error("Error fetching menu items:", err);
+      }
+    }
+
+    async function loadSettings() {
+      try {
+        const publicSettings = await api("/api/settings");
+        shopSettings = { ...shopSettings, ...publicSettings };
+      } catch (err) {
+        console.error("Error fetching settings:", err);
+      }
+    }
+
+    function syncSettingsInputs() {
+      const phoneInput = document.getElementById("shopPhoneInput");
+      const upiInput = document.getElementById("shopUpiInput");
+      if (phoneInput) phoneInput.value = shopSettings.phone || DEFAULT_SHOP_SETTINGS.phone;
+      if (upiInput) upiInput.value = shopSettings.upi || DEFAULT_SHOP_SETTINGS.upi;
+    }
+
+    window.resetDefaultMenuData = function() {
+      showConfirm("Reset all flavors to original starter list? Custom edits will be replaced.", async () => {
+        try {
+          menuItems = await api("/api/menu/reset", { method: "POST" });
+          menuItems.sort((a, b) => a.id.localeCompare(b.id));
+          rerenderAll();
+          showAlert("Menu successfully reset to defaults.");
+        } catch (error) {
+          console.error("Error resetting menu:", error);
+          showAlert("Failed to reset menu.");
+        }
+      });
+    }
+
+    function getCategories() {
+      if (activeCustomerTab === "cakes") {
+        const cakeCats = ["Cakes & Desserts", "Cakes & Bento"];
+        return ["All Cakes & Bento", ...cakeCats];
+      }
+      const cats = new Set(menuItems.map(item => item.category).filter(cat => cat !== "Cakes & Desserts" && cat !== "Cakes & Bento"));
+      return ["All", ...Array.from(cats)];
+    }
+
+    function renderCategoryTabs() {
+      const container = document.getElementById("categoryTabs");
+      if (!container) return;
+      const categories = getCategories();
+      if (!categories.includes(activeCategory)) activeCategory = activeCustomerTab === "cakes" ? "All Cakes & Bento" : "All";
+      container.innerHTML = categories.map(cat => {
+        const isActive = activeCategory === cat;
+        return `
+          <button onclick="filterCategory('${cat}')" class="px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${isActive ? 'bg-strawberry text-white shadow-sm shadow-pink-200' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200/60'}">
+            ${cat}
+          </button>`;
+      }).join('');
+    }
+
+    window.filterCategory = function(cat) {
+      activeCategory = cat;
+      renderCategoryTabs();
+      renderMenu();
+    }
+
+    window.switchCustomerTab = function(tab) {
+      activeCustomerTab = tab;
+      const menuSection = document.getElementById("menuSection");
+      const historySection = document.getElementById("orderHistorySection");
+      if (menuSection) menuSection.classList.toggle("hidden", tab === "history");
+      if (historySection) historySection.classList.toggle("hidden", tab !== "history");
+      document.querySelectorAll(".customer-nav-tab").forEach(btn => {
+        const active = btn.id === ({menu:"customerTabMenu", cakes:"customerTabCakes", history:"customerTabHistory"}[tab]);
+        btn.className = "customer-nav-tab px-3 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all " + (active ? "bg-stone-900 text-white shadow-soft" : "bg-white text-stone-600 border border-stone-200 hover:bg-stone-50");
+      });
+      if (tab === "cakes") {
+        activeCategory = "All Cakes & Bento";
+        document.getElementById("activeCategoryHeading").textContent = "Cakes, Desserts & Bento";
+      } else if (tab === "menu") {
+        activeCategory = "All";
+      } else {
+        renderOrderHistory();
+      }
+      renderCategoryTabs();
+      renderMenu();
+      renderCartBar();
+    }
+
+    function readOrderRefs() {
+      try { return JSON.parse(localStorage.getItem("icespotOrderRefs") || "[]").filter(ref => /^ICE-[A-F0-9]{10}$/.test(ref)).slice(0, 50); }
+      catch (_) { return []; }
+    }
+
+    function rememberOrderRef(ref) {
+      const refs = [ref, ...readOrderRefs().filter(existing => existing !== ref)].slice(0, 50);
+      localStorage.setItem("icespotOrderRefs", JSON.stringify(refs));
+    }
+
+    async function renderOrderHistory() {
+      const list = document.getElementById("orderHistoryList");
+      const empty = document.getElementById("emptyOrderHistory");
+      if (!list || !empty) return;
+      const refs = readOrderRefs();
+      if (!refs.length) { list.innerHTML = ""; empty.classList.remove("hidden"); return; }
+      try {
+        const orders = await api(`/api/orders?refs=${encodeURIComponent(refs.join(","))}`);
+        empty.classList.toggle("hidden", orders.length > 0);
+        list.innerHTML = orders.map(order => `
+          <article class="bg-white rounded-2xl border border-stone-200/70 p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-3"><div><h3 class="font-extrabold text-sm text-stone-900">${escapeHtml(order.ref)}</h3><p class="text-xs text-stone-500 mt-1">${new Date(order.createdAt).toLocaleString()}</p></div><span class="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-50 text-amber-700">${escapeHtml(order.status || "Pending confirmation")}</span></div>
+            <div class="mt-3 text-xs text-stone-600 space-y-1">${order.items.map(item => `<p>${Number(item.qty)} × ${escapeHtml(item.name)} — ₹${Number(item.lineTotal)}</p>`).join("")}</div>
+            <div class="border-t border-stone-100 mt-3 pt-3 flex items-center justify-between"><span class="text-xs text-stone-500">${order.pickupDate ? `Pickup: ${escapeHtml(order.pickupDate)}${order.pickupTime ? ` at ${escapeHtml(order.pickupTime)}` : ""}` : "Pickup date not specified"}</span><strong class="text-sm text-stone-900">₹${Number(order.total)}</strong></div>
+            ${order.inscription ? `<p class="mt-2 text-xs text-stone-600"><strong>Cake writing:</strong> ${escapeHtml(order.inscription)}</p>` : ""}
+            ${order.notes ? `<p class="mt-1 text-xs text-stone-600"><strong>Notes:</strong> ${escapeHtml(order.notes)}</p>` : ""}
+          </article>`).join("");
+      } catch (error) {
+        list.innerHTML = `<p class="text-sm text-rose-600">Couldn't load saved order history. Please check your connection and try again.</p>`;
+        empty.classList.add("hidden");
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    }
+
+    function renderMenu() {
+      const container = document.getElementById("menuContainer");
+      const emptyState = document.getElementById("emptyMenuState");
+      const badgeHeading = document.getElementById("activeCategoryHeading");
+      const countBadge = document.getElementById("itemCountBadge");
+
+      if (!container) return;
+
+      let filtered;
+      if (activeCustomerTab === "cakes") {
+        filtered = menuItems.filter(item => ["Cakes & Desserts", "Cakes & Bento"].includes(item.category));
+        if (activeCategory !== "All Cakes & Bento") filtered = filtered.filter(item => item.category === activeCategory);
+      } else {
+        filtered = menuItems.filter(item => !["Cakes & Desserts", "Cakes & Bento"].includes(item.category));
+        if (activeCategory !== "All") filtered = filtered.filter(item => item.category === activeCategory);
+      }
+
+      if (badgeHeading) badgeHeading.textContent = activeCustomerTab === "cakes" ? (activeCategory === "All Cakes & Bento" ? "Cakes, Desserts & Bento" : activeCategory) : (activeCategory === "All" ? "All Handcrafted Scoops" : activeCategory);
+      if (countBadge) countBadge.textContent = `${filtered.length} ${activeCustomerTab === "cakes" ? "items" : "flavors"}`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        if (emptyState) emptyState.classList.remove("hidden");
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add("hidden");
+
+      container.innerHTML = filtered.map(item => {
+        const qtyInCart = cart[item.id] || 0;
+        const isOutOfStock = !item.available;
+
+        return `
+          <div class="bg-white rounded-3xl p-3.5 border border-stone-200/70 shadow-soft hover:shadow-md transition-all flex gap-3.5 items-center relative overflow-hidden ${isOutOfStock ? 'opacity-60 grayscale-[0.4]' : ''}">
+            <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-rose-50 flex-shrink-0">
+              <img src="${item.imageUrl}" alt="${item.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/300x300/FFF0F3/FF6B8B?text=IceCream'" />
+              ${item.badge ? `<span class="absolute top-1.5 left-1.5 bg-stone-900/80 backdrop-blur-xs text-white text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-md">${item.badge}</span>` : ''}
+              ${isOutOfStock ? `<div class="absolute inset-0 bg-stone-900/60 backdrop-blur-2xs flex items-center justify-center text-white text-[11px] font-bold text-center p-1">Sold Out</div>` : ''}
+            </div>
+            <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch py-0.5">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">${item.category}</span>
+                <h3 class="font-display font-bold text-sm sm:text-base text-stone-900 leading-tight truncate">${item.name}</h3>
+                <p class="text-[11px] text-stone-500 line-clamp-2 mt-0.5 leading-snug">${item.desc || 'Signature handcrafted scoop.'}</p>
+              </div>
+              <div class="flex items-center justify-between mt-2 pt-1 border-t border-stone-100">
+                <div class="font-extrabold text-stone-900 text-sm sm:text-base">₹${item.price}</div>
+                <div>
+                  ${isOutOfStock ? `
+                    <span class="text-[11px] font-semibold text-stone-400 bg-stone-100 px-2.5 py-1 rounded-xl">Unavailable</span>
+                  ` : qtyInCart > 0 ? `
+                    <div class="flex items-center bg-rose-50 border border-rose-200 rounded-xl p-0.5">
+                      <button onclick="updateCartItem('${item.id}', -1)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-white shadow-xs text-strawberry font-bold text-base active:scale-90">-</button>
+                      <span class="w-7 text-center font-bold text-xs text-stone-900">${qtyInCart}</span>
+                      <button onclick="updateCartItem('${item.id}', 1)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-white shadow-xs text-strawberry font-bold text-base active:scale-90">+</button>
+                    </div>
+                  ` : `
+                    <button onclick="updateCartItem('${item.id}', 1)" class="px-3.5 py-1.5 rounded-xl bg-strawberry text-white text-xs font-bold hover:bg-rose-600 shadow-sm transition-transform active:scale-95 flex items-center gap-1">
+                      <span>+</span> Add
+                    </button>
+                  `}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.updateCartItem = function(id, change) {
+      const current = cart[id] || 0;
+      const updated = current + change;
+
+      if (updated <= 0) {
+        delete cart[id];
+      } else {
+        cart[id] = updated;
+      }
+
+      renderMenu();
+      renderCartBar();
+    }
+
+    function calculateCartTotals() {
+      let count = 0;
+      let total = 0;
+      for (const [id, qty] of Object.entries(cart)) {
+        const item = menuItems.find(m => m.id === id);
+        if (item) {
+          count += qty;
+          total += item.price * qty;
+        }
+      }
+      return { count, total };
+    }
+
+    function renderCartBar() {
+      const bar = document.getElementById("stickyCartBar");
+      const countEl = document.getElementById("cartCount");
+      const totalEl = document.getElementById("cartTotal");
+
+      const { count, total } = calculateCartTotals();
+
+      if (countEl) countEl.textContent = count;
+      if (totalEl) totalEl.textContent = total;
+
+      if (bar) {
+        if (count > 0 && currentView === "menu" && activeCustomerTab !== "history") {
+          bar.classList.remove("translate-y-full");
+        } else {
+          bar.classList.add("translate-y-full");
+        }
+      }
+    }
+
+    window.openCheckoutModal = function() {
+      const modal = document.getElementById("checkoutModal");
+      const listContainer = document.getElementById("checkoutCartItemsList");
+      const finalTotalEl = document.getElementById("checkoutFinalTotal");
+
+      const { total } = calculateCartTotals();
+      if (finalTotalEl) finalTotalEl.textContent = total;
+
+      if (listContainer) {
+        listContainer.innerHTML = Object.entries(cart).map(([id, qty]) => {
+          const item = menuItems.find(m => m.id === id);
+          if (!item) return '';
+          return `
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-stone-50 border border-stone-100">
+              <div class="flex-1 min-w-0 pr-2">
+                <h4 class="font-bold text-xs text-stone-900 truncate">${item.name}</h4>
+                <p class="text-[11px] text-stone-500">₹${item.price} × ${qty}</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-xs text-stone-800">₹${item.price * qty}</span>
+                <div class="flex items-center gap-1 bg-white border border-stone-200 rounded-lg p-0.5">
+                  <button onclick="updateCartItem('${item.id}', -1); openCheckoutModal();" class="w-5 h-5 flex items-center justify-center text-xs font-bold text-stone-600">-</button>
+                  <span class="text-xs font-bold px-1">${qty}</span>
+                  <button onclick="updateCartItem('${item.id}', 1); openCheckoutModal();" class="w-5 h-5 flex items-center justify-center text-xs font-bold text-strawberry">+</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    window.closeCheckoutModal = function() {
+      const modal = document.getElementById("checkoutModal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    window.sendOrderViaWhatsApp = async function() {
+      const custName = document.getElementById("custNameInput").value.trim();
+      const notes = document.getElementById("custNotesInput").value.trim();
+      const inscription = document.getElementById("cakeInscriptionInput").value.trim();
+      const pickupDate = document.getElementById("custPickupDate").value;
+      const pickupTime = document.getElementById("custPickupTime").value;
+      const orderTypeRadios = document.getElementsByName("orderType");
+      let orderType = "Takeaway";
+      for (const r of orderTypeRadios) if (r.checked) orderType = r.value;
+      if (!custName) { showAlert("Please enter your name for the order!"); document.getElementById("custNameInput").focus(); return; }
+      const { count } = calculateCartTotals();
+      if (count === 0) { showAlert("Your cart is empty. Please add items."); return; }
+      const cartItems = Object.entries(cart).map(([id, qty]) => ({ id, qty: Number(qty) }));
+      const cakeItemsInCart = cartItems.some(({id}) => { const item = menuItems.find(m => m.id === id); return item && ["Cakes & Desserts", "Cakes & Bento"].includes(item.category); });
+      if (cakeItemsInCart && !pickupDate) { showAlert("Please choose a preorder / pickup date for your cake order."); document.getElementById("custPickupDate").focus(); return; }
+
+      // Open a tab during the direct click gesture so browser popup blockers do not block WhatsApp later.
+      const waWindow = window.open("about:blank", "_blank");
+      let savedOrder;
+      try {
+        savedOrder = await api("/api/orders", { method: "POST", body: JSON.stringify({ customer: custName, orderType, items: cartItems, pickupDate, pickupTime, inscription, notes }) });
+        rememberOrderRef(savedOrder.ref);
+      } catch (error) {
+        if (waWindow) waWindow.close();
+        console.error("Order could not be saved", error);
+        showAlert(error.message || "We couldn't save your order. Please try again.");
+        return;
+      }
+      const itemsListText = savedOrder.items.map(item => `• ${item.qty}x ${item.name} (₹${item.lineTotal})`).join("\n");
+      const message =
+`🍦 *NEW ORDER: ${savedOrder.ref}*
+━━━━━━━━━━━━━━━━━━
+👤 *Customer:* ${custName}
+📦 *Order Type:* ${orderType}
+${pickupDate ? `📅 *Preorder / Pickup Date:* ${pickupDate}\n` : ""}${pickupTime ? `🕒 *Preferred Time:* ${pickupTime}\n` : ""}${inscription ? `🎂 *Cake Writing:* ${inscription}\n` : ""}${notes ? `📝 *Notes:* ${notes}\n` : ""}
+━━━━━━━━━━━━━━━━━━
+*Items Ordered:*
+${itemsListText}
+━━━━━━━━━━━━━━━━━━
+💰 *TOTAL AMOUNT: ₹${savedOrder.total}*
+💳 *Payment Mode:* UPI / Cash at counter
+🏦 *Payee UPI:* ${shopSettings.upi || "scoopcraft@okaxis"}
+
+_Please confirm the order with the shop. This message is a request, not a confirmed booking._`;
+      const targetPhone = (shopSettings.phone || "919876543210").replace(/[^0-9]/g, "");
+      const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`;
+      if (waWindow) { waWindow.location.href = waUrl; } else { window.location.href = waUrl; }
+      await renderOrderHistory();
+      cart = {};
+      closeCheckoutModal();
+      renderMenu();
+      renderCartBar();
+      showAlert(`Order request ${savedOrder.ref} was saved. Please send the WhatsApp message to contact the shop. Your order is pending shop confirmation.`);
+    }
+
+    window.openAdminLoginModal = function() {
+      const modal = document.getElementById("adminLoginModal");
+      const userInput = document.getElementById("adminUserIdInput");
+      const passInput = document.getElementById("adminPassInput");
+      const loginErr = document.getElementById("loginErrorMsg");
+
+      if (userInput) userInput.value = "";
+      if (passInput) passInput.value = "";
+      if (loginErr) loginErr.classList.add("hidden");
+      if (modal) modal.classList.remove("hidden");
+      if (userInput) userInput.focus();
+    }
+
+    window.closeAdminLoginModal = function() {
+      document.getElementById("adminLoginModal").classList.add("hidden");
+    }
+
+    window.verifyAdminLogin = async function() {
+      const enteredUser = document.getElementById("adminUserIdInput").value.trim();
+      const enteredPass = document.getElementById("adminPassInput").value.trim();
+      const loginErr = document.getElementById("loginErrorMsg");
+
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user: enteredUser, pass: enteredPass })
+        });
+        if (!res.ok) throw new Error("Invalid credentials");
+        const loginData = await res.json();
+        if (!res.ok) throw new Error(loginData.error || "Invalid credentials");
+        adminCreds = { token: loginData.token };
+        shopSettings = { ...shopSettings, phone: loginData.phone, upi: loginData.upi };
+        syncSettingsInputs();
+        closeAdminLoginModal();
+        switchView("admin");
+        await loadAdminOrders();
+      } catch (err) {
+        if (loginErr) loginErr.classList.remove("hidden");
+      }
+    }
+
+    window.switchView = function(viewName) {
+      currentView = viewName;
+      const customerView = document.getElementById("customerView");
+      const adminView = document.getElementById("adminView");
+      const toggleBtnText = document.getElementById("viewModeText");
+
+      if (viewName === "admin") {
+        if (customerView) customerView.classList.add("hidden");
+        if (adminView) adminView.classList.remove("hidden");
+        if (toggleBtnText) toggleBtnText.textContent = "Customer View";
+        renderAdminItems();
+      } else {
+        if (customerView) customerView.classList.remove("hidden");
+        if (adminView) adminView.classList.add("hidden");
+        if (toggleBtnText) toggleBtnText.textContent = "Admin Login";
+        switchCustomerTab(activeCustomerTab || "menu");
+      }
+      renderCartBar();
+    }
+
+    window.updateShopSettings = async function() {
+      const phoneInput = document.getElementById("shopPhoneInput");
+      const upiInput = document.getElementById("shopUpiInput");
+      const newSettings = { phone: phoneInput ? phoneInput.value.trim() : shopSettings.phone, upi: upiInput ? upiInput.value.trim() : shopSettings.upi };
+      try {
+        shopSettings = { ...shopSettings, ...await api("/api/settings", { method: "PUT", body: JSON.stringify(newSettings) }) };
+      } catch (err) {
+        console.error("Failed to update settings", err);
+        showAlert(err.message || "Error saving shop settings.");
+      }
+    }
+
+    window.loadAdminOrders = async function() {
+      const container = document.getElementById("adminOrdersList");
+      if (!container) return;
+      container.innerHTML = '<p class="text-sm text-stone-400">Loading orders…</p>';
+      try {
+        const orders = await api("/api/orders");
+        if (!orders.length) { container.innerHTML = '<p class="text-sm text-stone-400">No customer orders yet.</p>'; return; }
+        container.innerHTML = orders.map(order => `
+          <article class="rounded-2xl border border-stone-200 p-3">
+            <div class="flex flex-wrap items-start justify-between gap-2"><div><p class="font-extrabold text-sm">${escapeHtml(order.ref)} · ${escapeHtml(order.customer)}</p><p class="text-[11px] text-stone-500 mt-1">${new Date(order.createdAt).toLocaleString()} · ${escapeHtml(order.orderType)}</p></div><strong class="text-sm">₹${Number(order.total)}</strong></div>
+            <div class="text-xs text-stone-600 mt-2">${order.items.map(item => `<p>${Number(item.qty)} × ${escapeHtml(item.name)} — ₹${Number(item.lineTotal)}</p>`).join("")}</div>
+            <div class="text-xs text-stone-600 mt-2">${order.pickupDate ? `Pickup: ${escapeHtml(order.pickupDate)} ${escapeHtml(order.pickupTime || "")}` : "No pickup date"}${order.inscription ? ` · Cake writing: ${escapeHtml(order.inscription)}` : ""}${order.notes ? `<p class="mt-1">Notes: ${escapeHtml(order.notes)}</p>` : ""}</div>
+            <div class="flex items-center gap-2 mt-3"><label class="text-xs font-bold" for="status-${escapeHtml(order.ref)}">Status</label><select id="status-${escapeHtml(order.ref)}" onchange="updateOrderStatus('${escapeHtml(order.ref)}', this.value)" class="flex-1 text-xs p-2 rounded-lg border border-stone-200">${["Pending confirmation","Confirmed","Preparing","Ready for pickup","Completed","Cancelled"].map(status => `<option ${order.status===status?"selected":""}>${status}</option>`).join("")}</select></div>
+          </article>`).join("");
+      } catch (error) {
+        container.innerHTML = `<p class="text-sm text-rose-600">${escapeHtml(error.message || "Couldn't load orders. Please log in again.")}</p>`;
+      }
+    }
+
+    window.updateOrderStatus = async function(ref, status) {
+      try { await api(`/api/orders/${encodeURIComponent(ref)}`, { method: "PUT", body: JSON.stringify({ status }) }); await loadAdminOrders(); }
+      catch (error) { showAlert(error.message || "Couldn't update order status. Please log in again."); }
+    }
+
+    function renderAdminItems() {
+      const container = document.getElementById("adminItemsList");
+      const countEl = document.getElementById("adminItemCount");
+
+      if (countEl) countEl.textContent = menuItems.length;
+      if (!container) return;
+
+      container.innerHTML = menuItems.map(item => {
+        return `
+          <div class="py-3 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${item.imageUrl}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover bg-stone-100 flex-shrink-0" onerror="this.src='https://placehold.co/100x100/FFF0F3/FF6B8B?text=Ice'"/>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h4 class="font-bold text-xs sm:text-sm text-stone-900 truncate">${item.name}</h4>
+                  ${item.badge ? `<span class="bg-stone-100 text-[9px] font-bold px-1.5 py-0.5 rounded text-stone-600">${item.badge}</span>` : ''}
+                </div>
+                <div class="text-[11px] text-stone-400 flex items-center gap-2 mt-0.5">
+                  <span class="font-semibold text-stone-700">₹${item.price}</span>
+                  <span>•</span>
+                  <span>${item.category}</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="toggleItemStock('${item.id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold transition-colors ${item.available ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200' : 'bg-rose-100 text-rose-700 hover:bg-rose-200'}">
+                ${item.available ? 'In Stock' : 'Out of Stock'}
+              </button>
+              <button onclick="openItemEditorModal('${item.id}')" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs">✏️</button>
+              <button onclick="deleteItem('${item.id}')" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.toggleItemStock = async function(id) {
+      const item = menuItems.find(m => m.id === id);
+      if (item) {
+        item.available = !item.available;
+        rerenderAll();
+        try {
+          await api(`/api/menu/${encodeURIComponent(id)}`, { method: "PUT", body: JSON.stringify(item) });
+        } catch (err) {
+          console.error("Failed to toggle stock", err);
+          item.available = !item.available;
+          rerenderAll();
+          showAlert("Could not update stock status.");
+        }
+      }
+    }
+
+    window.deleteItem = function(id) {
+      const item = menuItems.find(m => m.id === id);
+      if (!item) return;
+
+      showConfirm(`Are you sure you want to delete "${item.name}"?`, async () => {
+        try {
+          await api(`/api/menu/${encodeURIComponent(id)}`, { method: "DELETE" });
+          menuItems = menuItems.filter(m => m.id !== id);
+          if (cart[id]) {
+            delete cart[id];
+          }
+          rerenderAll();
+        } catch (err) {
+          console.error("Failed to delete item", err);
+          showAlert("Could not delete this flavor. Please check your connection and try again.");
+        }
+      });
+    }
+
+    window.openItemEditorModal = function(itemId = null) {
+      const modal = document.getElementById("itemEditorModal");
+      const titleEl = document.getElementById("editorModalTitle");
+      const idInput = document.getElementById("editItemId");
+      const nameInput = document.getElementById("editItemName");
+      const catInput = document.getElementById("editItemCategory");
+      const priceInput = document.getElementById("editItemPrice");
+      const descInput = document.getElementById("editItemDesc");
+      const urlInput = document.getElementById("editItemImageUrl");
+      const badgeInput = document.getElementById("editItemBadge");
+      const availableInput = document.getElementById("editItemAvailable");
+      const thumb = document.getElementById("imagePreviewThumb");
+      const fileInput = document.getElementById("editItemFileInput");
+
+      if (fileInput) fileInput.value = "";
+      tempUploadedImageUrl = "";
+
+      if (itemId) {
+        const item = menuItems.find(m => m.id === itemId);
+        if (item) {
+          titleEl.textContent = "Edit Flavor";
+          idInput.value = item.id;
+          nameInput.value = item.name;
+          catInput.value = item.category;
+          priceInput.value = item.price;
+          descInput.value = item.desc || "";
+          urlInput.value = item.imageUrl || "";
+          badgeInput.value = item.badge || "";
+          availableInput.checked = item.available !== false;
+          thumb.src = item.imageUrl;
+        }
+      } else {
+        titleEl.textContent = "Add New Flavor";
+        idInput.value = "";
+        nameInput.value = "";
+        catInput.value = "Classic Scoops";
+        priceInput.value = "";
+        descInput.value = "";
+        urlInput.value = "";
+        badgeInput.value = "";
+        availableInput.checked = true;
+        thumb.src = "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&auto=format&fit=crop&q=80";
+      }
+
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    window.closeItemEditorModal = function() {
+      document.getElementById("itemEditorModal").classList.add("hidden");
+    }
+
+    window.handleImageFileSelect = function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Downscale so the image stays small enough to save with the item
+        const img = new Image();
+        img.onload = function() {
+          const maxSize = 600;
+          const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+          tempUploadedImageUrl = canvas.toDataURL("image/jpeg", 0.8);
+          document.getElementById("imagePreviewThumb").src = tempUploadedImageUrl;
+          document.getElementById("editItemImageUrl").value = "";
+        };
+        img.onerror = function() {
+          showAlert("Could not read that image file. Please try another one.");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    window.updatePreviewFromUrl = function(url) {
+      if (url && url.trim().length > 5) {
+        tempUploadedImageUrl = url.trim();
+        document.getElementById("imagePreviewThumb").src = tempUploadedImageUrl;
+      }
+    }
+
+    window.handleSaveItem = async function(event) {
+      event.preventDefault();
+
+      const id = document.getElementById("editItemId").value;
+      const name = document.getElementById("editItemName").value.trim();
+      const category = document.getElementById("editItemCategory").value;
+      const price = parseFloat(document.getElementById("editItemPrice").value) || 0;
+      const desc = document.getElementById("editItemDesc").value.trim();
+      const manualUrl = document.getElementById("editItemImageUrl").value.trim();
+      const badge = document.getElementById("editItemBadge").value.trim();
+      const available = document.getElementById("editItemAvailable").checked;
+
+      const finalImageUrl = tempUploadedImageUrl || manualUrl || "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&auto=format&fit=crop&q=80";
+
+      const itemId = id || "ic-" + Date.now().toString(36);
+      const newItem = {
+        id: itemId,
+        name,
+        category,
+        price,
+        desc,
+        imageUrl: finalImageUrl,
+        badge,
+        available
+      };
+
+      const saveBtn = document.getElementById("saveItemBtn");
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = "Saving..."; }
+
+      try {
+        const saved = await api(`/api/menu/${encodeURIComponent(itemId)}`, { method: "PUT", body: JSON.stringify(newItem) });
+        const idx = menuItems.findIndex(m => m.id === itemId);
+        if (idx >= 0) menuItems[idx] = saved; else menuItems.push(saved);
+        menuItems.sort((a, b) => a.id.localeCompare(b.id));
+        rerenderAll();
+        closeItemEditorModal();
+      } catch (err) {
+        console.error("Failed to save item", err);
+        showAlert("Error saving item. Please check your connection.");
+      } finally {
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "Save Flavor"; }
+      }
+    }
+
+    // Startup Execution
+    window.addEventListener("DOMContentLoaded", () => {
+      const dateInput = document.getElementById("custPickupDate");
+      if (dateInput) dateInput.min = new Date().toISOString().slice(0, 10);
+      loadSettings();
+      loadMenu();
+      renderOrderHistory();
+    });
+  </script>
+</body>
+</html>
